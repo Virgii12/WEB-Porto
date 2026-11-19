@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delfi D.S — Portofolio</title>
+
+  <!-- Google Fonts: Merriweather (Serif) & Plus Jakarta Sans (Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Theme Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              charcoal: '#222222',
+              beige: '#F3F0E8',
+              green: '#1B5E20',
+              greenDark: '#144718',
+              gold: '#D4A017',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Base typography & smooth transitions */
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: #ffffff;
+      color: #1f2937;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-serif-title {
+      font-family: 'Merriweather', Georgia, serif;
+    }
+
+    /* Classic Google Sites subtle textured header banner */
+    .page-banner-bg {
+      background-color: #F3F0E8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-banner-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=60');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    /* Page fade-in transition */
+    .portfolio-page {
+      animation: pageFadeIn 0.28s ease-out;
+    }
+
+    @keyframes pageFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Custom scrollbar for drawers */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.5);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased selection:bg-[#D4A017]/30 selection:text-gray-900">
+
+  <!-- =====================================================================
+       1. STICKY TOP HEADER BAR
+       ===================================================================== -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-gray-200/80 shadow-sm">
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+      <!-- Left: Hamburger Button + Brand Title -->
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button
+          id="openDrawerBtn"
+          type="button"
+          aria-label="Buka Menu Navigasi"
+          class="p-2.5 rounded-lg text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+        >
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          onclick="navigateTo('bio-summary')"
+          id="headerBrandTitle"
+          class="text-left font-sans font-semibold text-base sm:text-lg text-gray-900 tracking-tight truncate hover:text-[#1B5E20] transition"
+        >
+          Delfi D.S
+        </button>
+      </div>
+
+      <!-- Right: Search Toggle Button -->
+      <div class="flex items-center gap-1">
+        <button
+          id="toggleSearchBtn"
+          type="button"
+          aria-label="Cari Konten Portofolio"
+          class="p-2.5 rounded-lg text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Expandable Live Search Bar -->
+    <div id="searchBarContainer" class="hidden border-t border-gray-100 bg-gray-50/95 px-4 py-3">
+      <div class="max-w-2xl mx-auto relative">
+        <div class="flex items-center bg-white border border-gray-300 rounded-xl px-3.5 py-2 shadow-sm focus-within:border-[#1B5E20] focus-within:ring-2 focus-within:ring-[#1B5E20]/20">
+          <svg class="w-4 h-4 text-gray-400 mr-2.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            id="liveSearchInput"
+            type="text"
+            placeholder="Cari pengalaman, sertifikasi, skill, atau pendidikan..."
+            class="w-full text-sm text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none"
+          />
+          <button
+            id="clearSearchBtn"
+            type="button"
+            class="hidden text-xs font-medium text-gray-500 hover:text-gray-800 px-2 py-1 rounded-md"
+          >
+            Hapus
+          </button>
+        </div>
+
+        <!-- Live Search Results Dropdown -->
+        <div
+          id="searchResultsBox"
+          class="hidden mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-72 overflow-y-auto divide-y divide-gray-100"
+        ></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. SLIDE-OVER DARK CHARCOAL NAVIGATION DRAWER (#222222)
+       ===================================================================== -->
+  <div
+    id="drawerBackdrop"
+    class="fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+
+  <aside
+    id="navDrawer"
+    aria-label="Menu Utama"
+    class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-[#222222] text-white transform -translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl"
+  >
+    <!-- Top-Left Close Button (✕) -->
+    <div class="px-4 pt-4 pb-3 flex items-center justify-between border-b border-white/10">
+      <button
+        id="closeDrawerBtn"
+        type="button"
+        aria-label="Tutup Menu"
+        class="p-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/20 transition"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <span id="drawerBrandLabel" class="text-xs font-medium uppercase tracking-wider text-gray-400 pr-2">
+        Delfi D.S
+      </span>
+    </div>
+
+    <!-- Exact 6 Navigation Links -->
+    <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+      <button
+        type="button"
+        data-nav="bio-summary"
+        onclick="navigateTo('bio-summary')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Bio Summary</span>
+      </button>
+
+      <button
+        type="button"
+        data-nav="courses-and-specialities"
+        onclick="navigateTo('courses-and-specialities')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Courses and Specialities</span>
+      </button>
+
+      <button
+        type="button"
+        data-nav="working-experience"
+        onclick="navigateTo('working-experience')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Working Experience</span>
+      </button>
+
+      <button
+        type="button"
+        data-nav="organizational-experience"
+        onclick="navigateTo('organizational-experience')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Organizational Experience</span>
+      </button>
+
+      <button
+        type="button"
+        data-nav="education"
+        onclick="navigateTo('education')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Education</span>
+      </button>
+
+      <button
+        type="button"
+        data-nav="skill"
+        onclick="navigateTo('skill')"
+        class="nav-item w-full text-left px-4 py-3 rounded-lg text-[15px] font-medium transition flex items-center justify-between"
+      >
+        <span>Skill</span>
+      </button>
+    </nav>
+
+    <!-- Bottom Drawer Footer -->
+    <div class="p-4 border-t border-white/10 text-xs text-gray-400">
+      <p>Portofolio Akademik &amp; Profesional</p>
+    </div>
+  </aside>
+
+  <!-- =====================================================================
+       3. MAIN MULTI-PAGE CONTENT CONTAINER
+       ===================================================================== -->
+  <main id="mainContent" class="min-h-[calc(100vh-4rem)]">
+
+    <!-- ===================================================================
+         PAGE 1: BIO SUMMARY
+         =================================================================== -->
+    <section id="page-bio-summary" class="portfolio-page" data-page-title="Bio Summary">
+      <!-- Hero Photo Banner -->
+      <div class="relative w-full min-h-[410px] sm:min-h-[480px] flex items-center justify-center text-center px-6 py-14 overflow-hidden bg-gray-900">
+        <img
+          id="heroBgImage"
+          src="Profile.jpeg"
+          onerror="this.onerror=null;this.src='https://placehold.co/1200x600/2c3e50/ffffff?text=Foto+Profil+Utama';"
+          alt="Delfi Debora Septiaoki"
+          class="absolute inset-0 w-full h-full object-cover object-[center_24%] opacity-75 scale-105"
+        />
+        <!-- Soft Dark Vignette Overlay for Readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/40 to-black/65"></div>
+
+        <!-- Centered Serif Name & Subtitle -->
+        <div class="relative z-10 max-w-2xl mx-auto text-white drop-shadow-md">
+          <h1
+            id="heroFullName"
+            class="font-serif text-3xl sm:text-5xl font-bold leading-tight tracking-tight mb-4"
+          >
+            Delfi Debora<br class="sm:hidden" /> Septiaoki
+          </h1>
+          <p
+            id="heroSubtitle"
+            class="font-serif text-base sm:text-xl text-white/95 font-normal tracking-wide"
+          >
+            Resort and Leisure Management Student
+          </p>
+        </div>
+      </div>
+
+      <!-- Bio Intro Section -->
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
+        <h2
+          id="bioGreetingHeading"
+          class="font-serif text-2xl sm:text-3xl font-bold text-center text-gray-900 leading-snug mb-5"
+        >
+          Halo, Saya Delfi Debora Septiaoki
+        </h2>
+
+        <p
+          id="bioRoleTagline"
+          class="text-center font-bold text-sm sm:text-base text-gray-900 leading-relaxed mb-7 max-w-xl mx-auto"
+        >
+          Resort &amp; Leisure Management Student | Tourism Enthusiast | Service-Oriented Individual
+        </p>
+
+        <div class="space-y-5 text-[15px] sm:text-base text-gray-700 leading-[1.8] text-justify sm:text-left">
+          <p id="bioPara1">
+            Saya merupakan mahasiswi angkatan 2025 Program Studi S1 Manajemen Resort dan Leisure, Universitas Pendidikan Indonesia. Saat ini, saya aktif dalam berbagai kegiatan akademik maupun non-akademik yang berfokus pada pengembangan kepariwisataan, tata kelola destinasi, dan pelayanan hospitality.
+          </p>
+          <p id="bioPara2">
+            Melalui berbagai pengalaman kepanitiaan, olahraga kompetitif, dan kegiatan kreatif, saya terus mengembangkan kemampuan komunikasi, kepemimpinan, kerja sama tim, serta manajemen waktu yang efektif dalam menghadapi berbagai dinamika lapangan.
+          </p>
+          <p id="bioPara3">
+            Bagi saya, setiap pengalaman merupakan kesempatan untuk belajar dan bertumbuh. Dengan semangat eksplorasi, kreativitas, dan kemauan untuk terus berkembang, saya berkomitmen untuk memberikan kontribusi positif serta menciptakan pengalaman dan karya yang bermakna, baik dalam lingkungan akademik maupun profesional.
+          </p>
+        </div>
+      </div>
+
+      <!-- Full-Width Warm Mustard Gold (#D4A017) Quote Block -->
+      <div class="w-full bg-[#D4A017] text-white py-14 sm:py-16 px-6 text-center">
+        <div class="max-w-xl mx-auto">
+          <p id="bioQuoteVerse" class="font-serif text-sm sm:text-base uppercase tracking-widest opacity-95 mb-2">
+            Colossians 3:23
+          </p>
+          <blockquote
+            id="bioQuoteText"
+            class="font-serif italic text-xl sm:text-2xl font-bold leading-relaxed tracking-wide mb-5 drop-shadow-sm"
+          >
+            "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters"
+          </blockquote>
+          <p id="bioQuoteSignature" class="font-serif text-base sm:text-lg font-medium tracking-widest opacity-95">
+            -Debora-
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 2: COURSES AND SPECIALITIES
+         =================================================================== -->
+    <section id="page-courses-and-specialities" class="portfolio-page hidden" data-page-title="Courses and Specialities">
+      <!-- Warm Beige Header Banner -->
+      <div class="page-banner-bg py-14 sm:py-20 px-6 text-center border-b border-gray-200/70">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            Courses and<br class="sm:hidden" /> Specialities
+          </h1>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 space-y-12">
+        <!-- Spesialisasi & Bidang Minat -->
+        <div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6">
+            Spesialisasi &amp; Bidang Minat
+          </h2>
+          <ul class="list-disc pl-5 space-y-4 text-[15px] sm:text-base text-gray-700 leading-relaxed">
+            <li>
+              <strong class="text-gray-900">Sport Tourism Development:</strong> Ketertarikan dalam mengembangkan wisata berbasis olahraga yang menggabungkan aktivitas fisik, rekreasi, dan eksplorasi destinasi untuk menciptakan pengalaman wisata yang menarik.
+            </li>
+            <li>
+              <strong class="text-gray-900">Tourism Destination Development:</strong> Ketertarikan dalam mengeksplorasi potensi suatu destinasi, mengembangkan daya tarik wisata, serta menciptakan pengalaman yang dapat menarik lebih banyak pengunjung.
+            </li>
+            <li>
+              <strong class="text-gray-900">Event &amp; Experience Planning:</strong> Ketertarikan dalam merancang kegiatan, acara, dan pengalaman wisata yang menarik, interaktif, serta berkesan bagi pengunjung.
+            </li>
+            <li>
+              <strong class="text-gray-900">Outdoor &amp; Adventure Tourism:</strong> Ketertarikan pada wisata alam dan aktivitas petualangan sebagai salah satu cara untuk mengembangkan potensi wisata serta memberikan pengalaman baru bagi wisatawan.
+            </li>
+          </ul>
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- Prestasi & Penghargaan -->
+        <div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6">
+            Prestasi &amp; Penghargaan
+          </h2>
+          <ul class="list-disc pl-5 space-y-4 text-[15px] sm:text-base text-gray-700 leading-relaxed mb-8">
+            <li>
+              <strong class="text-gray-900">Juara 1 LIGAR Exhibition Basketball (2025):</strong> Meraih juara pertama dalam kompetisi basket ekshibisi yang diselenggarakan oleh tim basket SMAN 5 Garut (28–29 Januari 2025).
+            </li>
+            <li>
+              <strong class="text-gray-900">Juara 3 BKG Cup Basketball Vol. 2 (2024):</strong> Meraih penghargaan juara ketiga sebagai pemain tim SMAN 15 Garut A dalam turnamen BKG Cup Basketball Vol. 2 di Garut (1 Desember 2024).
+            </li>
+            <li>
+              <strong class="text-gray-900">Juara 1 Favorita Preanger Basketball League / PBL (2024):</strong> Meraih juara pertama kategori Umur 18 Putri pada turnamen PBL di Sarana Olahraga R.A.A Adiwijaya, Garut (30 Juni – 10 Juli 2024).
+            </li>
+            <li>
+              <strong class="text-gray-900">2nd Winner Locomotive Cup Vol. 2 Summer Time (2023):</strong> Meraih posisi juara kedua dalam kejuaraan bola basket Locomotive Cup Vol. 2.
+            </li>
+            <li>
+              <strong class="text-gray-900">Atlet Kontingen Kabupaten Garut – Kejurda Divisi I Bola Basket Jawa Barat (2023):</strong> Mewakili Pengkab PERBASI Kabupaten Garut pada Kejuaraan Daerah Divisi I Provinsi Jawa Barat di Cirebon (7–12 November 2023).
+            </li>
+          </ul>
+
+          <!-- Interactive Certificate & Award Cards (Click-to-Zoom Lightbox) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Award Card 1: p1.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Piagam Penghargaan Atlet Kejurda Divisi I Jawa Barat 2023', 'PERBASI Pengprov Jawa Barat • Kontingen Kabupaten Garut (Cirebon, Nov 2023)', 'p1.jpeg')"
+              class="group text-left bg-[#F3F0E8] border-2 border-[#D4A017]/50 rounded-xl p-4 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded-lg bg-white border border-gray-200 aspect-[4/3] mb-3">
+                <img
+                  src="p1.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x430/F3F0E8/1B5E20?text=Piagam+Kejurda+Jabar+2023';"
+                  alt="Piagam Penghargaan Atlet Kejurda Jawa Barat Kab. Garut"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] px-2.5 py-1 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-sm text-gray-900">Piagam Atlet Kejurda Jawa Barat 2023</p>
+              <p class="text-xs text-gray-600 mt-0.5">PERBASI Jawa Barat • Kontingen Kab. Garut</p>
+            </button>
+
+            <!-- Award Card 2: p2.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Juara 1 Favorita Preanger Basketball League (PBL) 2024', 'Kategori Umur 18 Putri • SOR R.A.A Adiwijaya, Garut (30 Juni – 10 Juli 2024)', 'p2.jpeg')"
+              class="group text-left bg-[#F3F0E8] border-2 border-[#1B5E20]/35 rounded-xl p-4 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded-lg bg-white border border-gray-200 aspect-[4/3] mb-3">
+                <img
+                  src="p2.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x430/F3F0E8/1B5E20?text=Juara+1+PBL+KU-18+Putri+2024';"
+                  alt="Sertifikat Juara 1 Favorita Preanger Basketball League KU-18 Putri"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] px-2.5 py-1 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-sm text-gray-900">Juara 1 Preanger Basketball League 2024</p>
+              <p class="text-xs text-gray-600 mt-0.5">Kategori Umur 18 Putri • Garut</p>
+            </button>
+
+            <!-- Award Card 3: p3.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('2nd Winner Locomotive Cup Vol. 2 Summer Time 2023', 'Championship Basketball • Locomotive Basketball & PERBASI Garut', 'p3.jpeg')"
+              class="group text-left bg-[#F3F0E8] border-2 border-[#1B5E20]/35 rounded-xl p-4 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded-lg bg-white border border-gray-200 aspect-[4/3] mb-3">
+                <img
+                  src="p3.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x430/F3F0E8/1B5E20?text=2nd+Winner+Locomotive+Cup+2023';"
+                  alt="Certificate of Achievement 2nd Winner Locomotive Cup Vol. 2"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] px-2.5 py-1 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-sm text-gray-900">2nd Winner Locomotive Cup Vol. 2 (2023)</p>
+              <p class="text-xs text-gray-600 mt-0.5">Championship Basketball • Summer Time</p>
+            </button>
+
+            <!-- Award Card 4: p4.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Juara 3 BKG Cup Basketball Vol. 2 2024', 'Pemain SMAN 15 Garut A • PERBASI Kab. Garut (1 Desember 2024)', 'p4.jpeg')"
+              class="group text-left bg-[#F3F0E8] border-2 border-[#D4A017]/50 rounded-xl p-4 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded-lg bg-white border border-gray-200 aspect-[4/3] mb-3">
+                <img
+                  src="p4.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x430/F3F0E8/1B5E20?text=Juara+3+BKG+Cup+2024';"
+                  alt="Sertifikat Juara 3 BKG Cup Basketball Vol. 2 2024"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] px-2.5 py-1 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-sm text-gray-900">Juara 3 BKG Cup Basketball Vol. 2 (2024)</p>
+              <p class="text-xs text-gray-600 mt-0.5">Pemain Tim SMAN 15 Garut A</p>
+            </button>
+
+            <!-- Award Card 5: p5.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Juara 1 LIGAR Exhibition Basketball 2025', 'Tim Basket SMAN 5 Garut (28–29 Januari 2025)', 'p5.jpeg')"
+              class="group sm:col-span-2 sm:max-w-md sm:mx-auto w-full text-left bg-[#F3F0E8] border-2 border-[#D4A017]/60 rounded-xl p-4 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded-lg bg-white border border-gray-200 aspect-[4/3] mb-3">
+                <img
+                  src="p5.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x430/F3F0E8/1B5E20?text=Juara+1+LIGAR+Exhibition+2025';"
+                  alt="Sertifikat Juara 1 LIGAR Exhibition Basketball 2025"
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[11px] px-2.5 py-1 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-sm text-gray-900">Juara 1 LIGAR Exhibition Basketball 2025</p>
+              <p class="text-xs text-gray-600 mt-0.5">Turnamen Basket Antar Pelajar • Januari 2025</p>
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- Sertifikasi & Pengembangan Kompetensi -->
+        <div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6">
+            Sertifikasi &amp; Pengembangan Kompetensi
+          </h2>
+
+          <div class="space-y-6 text-[15px] sm:text-base text-gray-700 leading-relaxed">
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-200/80">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg mb-2">
+                Basketball Championship – Runner-Up
+              </h3>
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li><strong class="text-gray-900">Kompetisi:</strong> Locomotive Cup Vol. 2 Summer Time 2023, tingkat kabupaten</li>
+                <li><strong class="text-gray-900">Kategori:</strong> Kompetisi Bola Basket</li>
+                <li><strong class="text-gray-900">Pencapaian:</strong> Meraih posisi juara 2 dalam kompetisi Locomotive Cup 2023.</li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-200/80">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg mb-2">
+                Basketball Championship – 1st Place
+              </h3>
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li><strong class="text-gray-900">Kompetisi:</strong> Favorita Preanger Basketball League 2024, tingkat provinsi</li>
+                <li><strong class="text-gray-900">Kategori:</strong> U-18 Putri</li>
+                <li><strong class="text-gray-900">Pencapaian:</strong> Meraih juara 1 dalam kompetisi basket kategori U-18 putri.</li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-200/80">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg mb-2">
+                Basketball Championship – 3rd Place
+              </h3>
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li><strong class="text-gray-900">Kompetisi:</strong> BKG Cup Basketball Vol. 2 2024, tingkat kabupaten</li>
+                <li><strong class="text-gray-900">Kategori:</strong> Pemain SMAN 15 Garut A</li>
+                <li><strong class="text-gray-900">Pencapaian:</strong> Meraih juara 3 bersama tim dalam kompetisi BKG Cup Basketball 2024.</li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-200/80">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg mb-2">
+                Basketball Championship – 1st Place
+              </h3>
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li><strong class="text-gray-900">Kompetisi:</strong> Ligar Exhibition Basketball 2025, tingkat provinsi</li>
+                <li><strong class="text-gray-900">Kategori:</strong> Kompetisi Bola Basket</li>
+                <li><strong class="text-gray-900">Pencapaian:</strong> Meraih juara 1 dalam Ligar Exhibition Basketball 2025.</li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-200/80">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg mb-2">
+                Regional Athlete – Garut (2024)
+              </h3>
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li><strong class="text-gray-900">Bidang:</strong> Kejuaraan Daerah Jawa Barat, tingkat provinsi</li>
+                <li><strong class="text-gray-900">Pencapaian:</strong> Terpilih sebagai atlet yang mewakili Kabupaten Garut dalam Kejuaraan Daerah 2024.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 3: WORKING EXPERIENCE
+         =================================================================== -->
+    <section id="page-working-experience" class="portfolio-page hidden" data-page-title="Working Experience">
+      <!-- Warm Beige Header Banner -->
+      <div class="page-banner-bg py-14 sm:py-20 px-6 text-center border-b border-gray-200/70">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            Working<br class="sm:hidden" /> Experience
+          </h1>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 space-y-12">
+        <div class="text-center space-y-2">
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-gray-900">
+            Pengalaman Kerja (Work Experience)
+          </h2>
+          <p class="font-serif text-base sm:text-lg font-semibold text-gray-700">
+            Pengalaman Event &amp; Operasional Profesional
+          </p>
+        </div>
+
+        <!-- Work Experience Entries List -->
+        <div id="workExperienceList" class="space-y-8 text-[15px] sm:text-base text-gray-700 leading-relaxed">
+          <!-- Entry 1 -->
+          <div class="border-l-4 border-[#1B5E20] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                1. Liaison Officer Coordinator (LO) – FPBL Season 4 West Java
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-[#1B5E20] px-2.5 py-1 rounded-full">
+                2026
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Mengoordinasikan staff Liaison Officer (LO) serta menangani koordinasi dengan tim yang menjadi tanggung jawab selama kompetisi berlangsung.</li>
+              <li>Mengatur pembagian tugas serta memastikan komunikasi antara staff, tim, dan panitia berjalan efektif.</li>
+              <li>Bertugas sebagai Liaison Officer (LO) dalam penyelenggaraan event basket tingkat provinsi.</li>
+              <li>Membantu koordinasi dan komunikasi antara panitia, tim, serta pihak-pihak yang terlibat dalam kegiatan.</li>
+              <li>Mendukung kebutuhan operasional selama berlangsungnya kompetisi agar kegiatan berjalan lancar.</li>
+              <li>Mengembangkan kemampuan komunikasi, koordinasi, problem-solving, serta kerja sama dalam lingkungan event olahraga.</li>
+            </ul>
+          </div>
+
+          <!-- Entry 2 -->
+          <div class="border-l-4 border-[#D4A017] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                2. Ticketing Staff – FPBL Season 3 West Java
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-gray-800 px-2.5 py-1 rounded-full">
+                2025
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Bertugas dalam pelayanan tiket pada event kompetisi basket tingkat Jawa Barat.</li>
+              <li>Membantu proses pemeriksaan tiket dan memastikan akses masuk penonton berjalan tertib.</li>
+              <li>Memberikan informasi serta membantu kebutuhan pengunjung selama proses ticketing.</li>
+              <li>Mengembangkan kemampuan pelayanan, komunikasi, ketelitian, dan penanganan pengunjung dalam event berskala regional.</li>
+            </ul>
+          </div>
+
+          <!-- Entry 3 -->
+          <div class="border-l-4 border-[#1B5E20] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                3. Cashier – FPBL Season 3 West Java
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-[#1B5E20] px-2.5 py-1 rounded-full">
+                2025
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Bertanggung jawab menangani transaksi pembayaran selama berlangsungnya event basket.</li>
+              <li>Memastikan proses transaksi dan pencatatan pembayaran berjalan dengan teliti dan akurat.</li>
+              <li>Memberikan pelayanan yang baik kepada pelanggan serta menjaga kelancaran operasional kasir.</li>
+            </ul>
+          </div>
+
+          <!-- Entry 4 -->
+          <div class="border-l-4 border-[#D4A017] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                4. Receptionist – Basketball Event
+              </h3>
+            </div>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Bertugas menyambut dan memberikan informasi kepada peserta, tamu, maupun pihak yang hadir dalam event basket.</li>
+              <li>Membantu proses penerimaan tamu dan kebutuhan administrasi di area resepsionis.</li>
+              <li>Menjaga komunikasi serta memberikan pelayanan yang ramah dan profesional selama acara berlangsung.</li>
+            </ul>
+          </div>
+
+          <!-- Entry 5 -->
+          <div class="border-l-4 border-[#1B5E20] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                5. Participant Registration Verification Staff – Basketball Event
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-[#1B5E20] px-2.5 py-1 rounded-full">
+                2026
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Melakukan pengecekan data NISN peserta untuk memastikan kesesuaian dan status pendaftaran dalam database penyelenggara.</li>
+              <li>Membantu proses verifikasi administrasi peserta sebelum mengikuti kompetisi.</li>
+              <li>Memastikan data peserta diperiksa secara teliti untuk mendukung kelancaran proses registrasi.</li>
+              <li>Mengembangkan kemampuan administrasi, ketelitian, dan pengelolaan data peserta.</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- Dokumentasi Kegiatan: dk1.jpg, dk2.jpeg, dk3.jpeg, dk4.jpg, dk5.jpg -->
+        <div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6">
+            Dokumentasi Kegiatan
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            <!-- Documentation Photo 1: dk1.jpg -->
+            <button
+              type="button"
+              onclick="openLightbox('Liaison Officer Coordinator', 'Delfi dengan atribut panitia (rompi LO) di depan venue Arena kegiatan.', 'dk1.jpeg')"
+              class="group text-left border-[6px] border-[#1B5E20] bg-white rounded-lg p-2 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded bg-gray-50 aspect-[3/4] mb-2">
+                <img
+                  src="dk1.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x530/F3F0E8/1B5E20?text=Dokumentasi+Liaison+Officer';"
+                  alt="Delfi sebagai Liaison Officer di depan arena"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-xs text-gray-900">Liaison Officer Coordinator</p>
+              <p class="text-[11px] text-gray-600 mt-0.5">Atribut panitia (rompi LO) di depan venue kegiatan</p>
+            </button>
+
+            <!-- Documentation Photo 2: dk2.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Poster Tim Liaison Officers (LO)', 'Roster resmi Team Coordination & Athlete Services pada FPBL West Java Conference.', 'dk2.jpeg')"
+              class="group text-left border-[6px] border-[#D4A017]/70 bg-white rounded-lg p-2 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded bg-gray-50 aspect-[3/4] mb-2">
+                <img
+                  src="dk2.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x530/F3F0E8/1B5E20?text=Poster+Tim+LO+FPBL';"
+                  alt="Poster Liaison Officers"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-xs text-gray-900">Poster Resmi Liaison Officers</p>
+              <p class="text-[11px] text-gray-600 mt-0.5">Delfi sebagai Koordinator LO FPBL West Java</p>
+            </button>
+
+            <!-- Documentation Photo 3: dk3.jpeg -->
+            <button
+              type="button"
+              onclick="openLightbox('Team Coordination & Athlete Services', 'Interaksi dan koordinasi di lapangan dengan peserta/tim basket yang didampingi.', 'dk3.jpeg')"
+              class="group text-left border-[6px] border-[#1B5E20] bg-white rounded-lg p-2 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded bg-gray-50 aspect-[3/4] mb-2">
+                <img
+                  src="dk3.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x530/F3F0E8/1B5E20?text=Pelayanan+Atlet';"
+                  alt="Pelayanan & Layanan Atlet di Lapangan"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-xs text-gray-900">Pendampingan &amp; Layanan Atlet</p>
+              <p class="text-[11px] text-gray-600 mt-0.5">Interaksi dan koordinasi hangat dengan peserta di area lapangan</p>
+            </button>
+
+            <!-- Documentation Photo 4: dk4.jpg -->
+            <button
+              type="button"
+              onclick="openLightbox('Kebersamaan Staff & Tim Operasional', 'Sesi briefing dan keakraban seluruh panitia event di sela-sela kompetisi.', 'dk4.jpeg')"
+              class="group text-left border-[6px] border-[#D4A017]/70 bg-white rounded-lg p-2 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded bg-gray-50 aspect-[3/4] mb-2">
+                <img
+                  src="dk4.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x530/F3F0E8/1B5E20?text=Kebersamaan+Panitia';"
+                  alt="Staff Group Selfie di arena"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-xs text-gray-900">Tim Operasional &amp; Registrasi</p>
+              <p class="text-[11px] text-gray-600 mt-0.5">Briefing dan kebersamaan panitia di sela-sela kegiatan</p>
+            </button>
+
+            <!-- Documentation Photo 5: dk5.jpg -->
+            <button
+              type="button"
+              onclick="openLightbox('Tim Panitia & Atlet FPBL', 'Sesi dokumentasi tim official dan seluruh panitia FPBL West Java.', 'dk5.jpeg')"
+              class="group sm:col-span-2 md:col-span-1 text-left border-[6px] border-[#1B5E20] bg-white rounded-lg p-2 shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-[#1B5E20]"
+            >
+              <div class="relative overflow-hidden rounded bg-gray-50 aspect-[3/4] mb-2">
+                <img
+                  src="dk5.jpeg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x530/F3F0E8/1B5E20?text=Tim+FPBL+di+Lapangan';"
+                  alt="Tim Panitia di Lapangan Basket"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                />
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-full">
+                  🔍 Perbesar
+                </span>
+              </div>
+              <p class="font-serif font-bold text-xs text-gray-900">Kebersamaan Panitia &amp; Atlet FPBL</p>
+              <p class="text-[11px] text-gray-600 mt-0.5">Penutupan kegiatan dan koordinasi akhir di lapangan basket</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 4: ORGANIZATIONAL EXPERIENCE
+         =================================================================== -->
+    <section id="page-organizational-experience" class="portfolio-page hidden" data-page-title="Organizational Experience">
+      <!-- Warm Beige Header Banner -->
+      <div class="page-banner-bg py-14 sm:py-20 px-6 text-center border-b border-gray-200/70">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            Organizational<br class="sm:hidden" /> Experience
+          </h1>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 space-y-8">
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-4">
+          Pengalaman Organisasi &amp; Kepanitiaan
+        </h2>
+
+        <div id="orgExperienceList" class="space-y-6 text-[15px] sm:text-base text-gray-700 leading-relaxed">
+          <!-- Org 1 (User's Primary Organization Entry) -->
+          <div class="border-l-4 border-[#1B5E20] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                Direktur – Pathfinder West Java Kab. Garut
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-[#1B5E20] px-2.5 py-1 rounded-full">
+                2023 – 2024
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-1.5 mt-2">
+              <li>Memimpin dan mengoordinasikan anggota dalam pelaksanaan kegiatan serta program organisasi.</li>
+              <li>Mengarahkan jalannya kegiatan, membagi tanggung jawab, dan memastikan program berjalan sesuai rencana.</li>
+              <li>Membangun komunikasi, kerja sama, dan keterlibatan aktif antaranggota.</li>
+              <li>Mengembangkan kemampuan kepemimpinan, manajemen tim, pengambilan keputusan, dan tanggung jawab organisasi.</li>
+            </ul>
+          </div>
+
+          <!-- Org 2 -->
+          <div class="border-l-4 border-[#D4A017] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                Anggota Aktif &amp; Panitia Kegiatan — Himpunan Mahasiswa Manajemen Resort dan Leisure (UPI)
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-gray-800 px-2.5 py-1 rounded-full">
+                2025 – Sekarang
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-1.5 mt-2">
+              <li>Berpartisipasi aktif dalam program kerja kemahasiswaan, diskusi kepariwisataan, dan kegiatan pengabdian masyarakat.</li>
+              <li>Berkolaborasi dalam divisi acara dan hubungan masyarakat untuk menyukseskan seminar dan kegiatan kampus.</li>
+            </ul>
+          </div>
+
+          <!-- Org 3 -->
+          <div class="border-l-4 border-[#1B5E20] pl-4 sm:pl-5 py-1">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <h3 class="font-bold text-gray-900 text-base sm:text-lg">
+                Atlet &amp; Anggota Tim Bola Basket — SMA Negeri 15 Garut &amp; Kontingen PERBASI Kab. Garut
+              </h3>
+              <span class="text-xs font-semibold bg-[#F3F0E8] text-[#1B5E20] px-2.5 py-1 rounded-full">
+                2022 – 2025
+              </span>
+            </div>
+            <ul class="list-disc pl-5 space-y-1.5 mt-2">
+              <li>Berlatih secara disiplin dan berpartisipasi aktif dalam berbagai kompetisi bola basket tingkat kabupaten hingga provinsi (Kejurda Jawa Barat, PBL, BKG Cup, dan LIGAR).</li>
+              <li>Membangun kekompakan tim, strategi pertandingan, sportivitas, dan ketahanan mental di bawah tekanan kompetisi.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 5: EDUCATION
+         =================================================================== -->
+    <section id="page-education" class="portfolio-page hidden" data-page-title="Education">
+      <!-- Warm Beige Header Banner -->
+      <div class="page-banner-bg py-14 sm:py-20 px-6 text-center border-b border-gray-200/70">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            Education
+          </h1>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 space-y-8">
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6">
+          Riwayat Pendidikan
+        </h2>
+
+        <!-- Education Timeline -->
+        <div class="relative border-l-2 border-[#1B5E20]/30 ml-3 space-y-8">
+          <!-- University Card -->
+          <div class="relative pl-7">
+            <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#1B5E20] ring-4 ring-white"></span>
+            <div class="bg-[#F3F0E8]/70 border border-gray-200 rounded-xl p-5 sm:p-6 shadow-sm">
+              <span class="inline-block text-xs font-bold uppercase tracking-wider text-[#1B5E20] bg-white px-3 py-1 rounded-full border border-[#1B5E20]/20 mb-2.5">
+                2025 – Sekarang
+              </span>
+              <h3 class="font-serif text-lg sm:text-xl font-bold text-gray-900">
+                Universitas Pendidikan Indonesia (UPI)
+              </h3>
+              <p class="font-semibold text-sm sm:text-base text-gray-800 mt-1">
+                S1 Manajemen Resort dan Leisure
+              </p>
+              <ul class="list-disc pl-5 space-y-1.5 text-sm sm:text-[15px] text-gray-700 mt-3 leading-relaxed">
+                <li>Fokus studi pada perencanaan destinasi wisata, manajemen resort, hospitality, dan operasional pariwisata berkelanjutan.</li>
+                <li>Aktif mengikuti organisasi mahasiswa dan kepanitiaan acara akademik maupun kreatif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Senior High School Card -->
+          <div class="relative pl-7">
+            <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#D4A017] ring-4 ring-white"></span>
+            <div class="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-sm">
+              <span class="inline-block text-xs font-bold uppercase tracking-wider text-gray-700 bg-[#F3F0E8] px-3 py-1 rounded-full mb-2.5">
+                2022 – 2025
+              </span>
+              <h3 class="font-serif text-lg sm:text-xl font-bold text-gray-900">
+                SMA Negeri 15 Garut
+              </h3>
+              <p class="font-semibold text-sm sm:text-base text-gray-800 mt-1">
+                Pendidikan Menengah Atas
+              </p>
+              <ul class="list-disc pl-5 space-y-1.5 text-sm sm:text-[15px] text-gray-700 mt-3 leading-relaxed">
+                <li>Aktif sebagai atlet bola basket sekolah dan perwakilan Kabupaten Garut dengan berbagai prestasi tingkat daerah hingga provinsi.</li>
+                <li>Berpartisipasi dalam kegiatan kepanitiaan, pengembangan kreativitas, dan organisasi siswa.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         PAGE 6: SKILL
+         =================================================================== -->
+    <section id="page-skill" class="portfolio-page hidden" data-page-title="Skill">
+      <!-- Warm Beige Header Banner -->
+      <div class="page-banner-bg py-14 sm:py-20 px-6 text-center border-b border-gray-200/70">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            Skill
+          </h1>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mx-auto px-6 sm:px-8 py-12 space-y-8">
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-center text-gray-900 mb-4">
+          Keahlian &amp; Kompetensi
+        </h2>
+
+        <div id="skillsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Hard Skills -->
+          <div class="bg-[#F3F0E8]/70 border border-gray-200 rounded-xl p-5">
+            <h3 class="font-serif font-bold text-base sm:text-lg text-[#1B5E20] mb-3 flex items-center gap-2">
+              <span>🎯</span> Hard Skills
+            </h3>
+            <ul class="list-disc pl-5 space-y-2 text-sm sm:text-[15px] text-gray-700">
+              <li>Event Operations &amp; Liaison Officer (LO)</li>
+              <li>Participant Registration &amp; NISN Verification</li>
+              <li>Ticketing, Cashier &amp; Front-Desk Reception</li>
+              <li>Customer Service &amp; Hospitality</li>
+              <li>Administrasi &amp; Pencatatan Operasional</li>
+            </ul>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="bg-[#F3F0E8]/70 border border-gray-200 rounded-xl p-5">
+            <h3 class="font-serif font-bold text-base sm:text-lg text-[#1B5E20] mb-3 flex items-center gap-2">
+              <span>🤝</span> Soft Skills
+            </h3>
+            <ul class="list-disc pl-5 space-y-2 text-sm sm:text-[15px] text-gray-700">
+              <li>Leadership &amp; Manajemen Tim</li>
+              <li>Public Speaking &amp; Komunikasi Interpersonal</li>
+              <li>Problem Solving &amp; Adaptabilitas</li>
+              <li>Manajemen Waktu &amp; Ketelitian</li>
+              <li>Kreativitas &amp; Kolaborasi</li>
+            </ul>
+          </div>
+
+          <!-- Tools & Software -->
+          <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <h3 class="font-serif font-bold text-base sm:text-lg text-gray-900 mb-3 flex items-center gap-2">
+              <span>💻</span> Tools &amp; Software
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-gray-100 text-gray-800 text-xs sm:text-sm font-medium rounded-lg">Google Workspace</span>
+              <span class="px-3 py-1.5 bg-gray-100 text-gray-800 text-xs sm:text-sm font-medium rounded-lg">Microsoft Office (Word, Excel, PPT)</span>
+              <span class="px-3 py-1.5 bg-gray-100 text-gray-800 text-xs sm:text-sm font-medium rounded-lg">Canva Design</span>
+              <span class="px-3 py-1.5 bg-gray-100 text-gray-800 text-xs sm:text-sm font-medium rounded-lg">CapCut / Video Editing</span>
+              <span class="px-3 py-1.5 bg-gray-100 text-gray-800 text-xs sm:text-sm font-medium rounded-lg">Database Verification</span>
+            </div>
+          </div>
+
+          <!-- Bahasa (Languages) -->
+          <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <h3 class="font-serif font-bold text-base sm:text-lg text-gray-900 mb-3 flex items-center gap-2">
+              <span>🌐</span> Bahasa (Languages)
+            </h3>
+            <div class="space-y-3 text-sm sm:text-[15px]">
+              <div>
+                <div class="flex justify-between font-medium text-gray-900 mb-1">
+                  <span>Bahasa Indonesia</span>
+                  <span class="text-xs text-[#1B5E20] font-semibold">Native / Fasih</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-[#1B5E20] h-2 rounded-full w-full"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between font-medium text-gray-900 mb-1">
+                  <span>Bahasa Inggris</span>
+                  <span class="text-xs text-[#D4A017] font-semibold">Intermediate / Communication</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-[#D4A017] h-2 rounded-full w-4/5"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       4. SHARED DEEP FOREST GREEN (#1B5E20) FOOTER CTA BANNER
+       ===================================================================== -->
+  <footer class="w-full bg-[#1B5E20] text-white py-12 sm:py-14 px-6 text-center">
+    <div class="max-w-xl mx-auto">
+      <h2 class="font-serif text-2xl sm:text-3xl font-bold mb-3">
+        Let's connect
+      </h2>
+      <p class="text-sm text-white/85 mb-7 max-w-md mx-auto">
+        Terbuka untuk diskusi seputar manajemen pariwisata, kolaborasi acara, organisasi, maupun peluang profesional.
+      </p>
+
+      <!-- Interactive Contact Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <a
+          id="footerEmailLink"
+          href="mailto:delfidebora13@gmail.com"
+          onclick="copyEmailToast(event)"
+          class="inline-flex items-center gap-2 bg-white text-[#1B5E20] hover:bg-[#F3F0E8] font-semibold text-sm px-4 py-2.5 rounded-full shadow-sm transition"
+        >
+          <span>✉️</span>
+          <span>Email</span>
+        </a>
+
+        <a
+          id="footerInstagramLink"
+          href="https://www.instagram.com/deborracle?gwpx=MTJieGEyMmh0azVqZA=="
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium text-sm px-4 py-2.5 rounded-full transition"
+        >
+          <span>📸</span>
+          <span>Instagram</span>
+        </a>
+        <a
+          id="footerWhatsappLink"
+          href="https://wa.me/62882001964440"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium text-sm px-4 py-2.5 rounded-full transition"
+        >
+          <span>💬</span>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      <div class="border-t border-white/15 pt-5 text-xs text-white/75">
+        <p id="footerCopyrightName">Delfi Debora Septiaoki</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       5. CLICK-TO-ZOOM LIGHTBOX MODAL (Certificates & Documentation Photos)
+       ===================================================================== -->
+  <div
+    id="lightboxModal"
+    class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
+    onclick="closeLightbox(event)"
+  >
+    <div
+      class="relative bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl"
+      onclick="event.stopPropagation()"
+    >
+      <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+        <div class="pr-4">
+          <h3 id="lightboxTitle" class="font-serif font-bold text-sm sm:text-base text-gray-900"></h3>
+          <p id="lightboxSubtitle" class="text-xs text-gray-500 mt-0.5"></p>
+        </div>
+        <button
+          type="button"
+          onclick="closeLightbox()"
+          aria-label="Tutup Pratinjau"
+          class="p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="bg-gray-100 flex items-center justify-center max-h-[72vh] overflow-auto p-3">
+        <img
+          id="lightboxImage"
+          src=""
+          alt="Pratinjau Dokumen"
+          class="max-h-[66vh] w-auto rounded-lg object-contain shadow"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Non-Blocking Toast Notification -->
+  <div
+    id="toastMessage"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden bg-[#222222] text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-full shadow-lg"
+  ></div>
+
+  <!-- =====================================================================
+       6. JAVASCRIPT: NAVIGATION, LIVE SEARCH & LIGHTBOX
+       ===================================================================== -->
+  <script>
+    // State & Page Registry
+    const PAGES = [
+      'bio-summary',
+      'courses-and-specialities',
+      'working-experience',
+      'organizational-experience',
+      'education',
+      'skill',
+    ];
+
+    let currentPage = 'bio-summary';
+
+    // DOM Elements
+    const navDrawer = document.getElementById('navDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const openDrawerBtn = document.getElementById('openDrawerBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const toggleSearchBtn = document.getElementById('toggleSearchBtn');
+    const searchBarContainer = document.getElementById('searchBarContainer');
+    const liveSearchInput = document.getElementById('liveSearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const searchResultsBox = document.getElementById('searchResultsBox');
+
+    // ---------------------------------------------------------------------
+    // SLIDE-OVER NAVIGATION DRAWER LOGIC
+    // ---------------------------------------------------------------------
+    function openDrawer() {
+      navDrawer.classList.remove('-translate-x-full');
+      drawerBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      navDrawer.classList.add('-translate-x-full');
+      drawerBackdrop.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+
+    openDrawerBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    drawerBackdrop.addEventListener('click', closeDrawer);
+
+    // ---------------------------------------------------------------------
+    // MULTI-PAGE ROUTING & NAVIGATION
+    // ---------------------------------------------------------------------
+    function navigateTo(pageId, closeMenu = true) {
+      if (!PAGES.includes(pageId)) pageId = 'bio-summary';
+      currentPage = pageId;
+
+      // Toggle visible page section
+      PAGES.forEach((id) => {
+        const el = document.getElementById('page-' + id);
+        if (el) {
+          if (id === pageId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update active state inside slide-over drawer
+      document.querySelectorAll('.nav-item').forEach((btn) => {
+        const isTarget = btn.getAttribute('data-nav') === pageId;
+        if (isTarget) {
+          btn.classList.add('bg-white/15', 'text-white', 'font-semibold', 'border-l-4', 'border-[#D4A017]');
+          btn.classList.remove('text-gray-300', 'hover:bg-white/10');
+        } else {
+          btn.classList.remove('bg-white/15', 'text-white', 'font-semibold', 'border-l-4', 'border-[#D4A017]');
+          btn.classList.add('text-gray-300', 'hover:bg-white/10');
+        }
+      });
+
+      if (closeMenu) closeDrawer();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Update URL hash cleanly
+      try {
+        history.replaceState(null, '', '#' + pageId);
+      } catch (e) {}
+    }
+
+    // ---------------------------------------------------------------------
+    // EXPANDABLE LIVE SEARCH ACROSS ALL 6 PAGES
+    // ---------------------------------------------------------------------
+    toggleSearchBtn.addEventListener('click', () => {
+      const isHidden = searchBarContainer.classList.contains('hidden');
+      if (isHidden) {
+        searchBarContainer.classList.remove('hidden');
+        liveSearchInput.focus();
+      } else {
+        searchBarContainer.classList.add('hidden');
+        searchResultsBox.classList.add('hidden');
+      }
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      liveSearchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      searchResultsBox.classList.add('hidden');
+      liveSearchInput.focus();
+    });
+
+    liveSearchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      if (!query) {
+        clearSearchBtn.classList.add('hidden');
+        searchResultsBox.classList.add('hidden');
+        return;
+      }
+
+      clearSearchBtn.classList.remove('hidden');
+      const matches = [];
+
+      PAGES.forEach((pageId) => {
+        const section = document.getElementById('page-' + pageId);
+        if (!section) return;
+        const pageTitle = section.getAttribute('data-page-title') || pageId;
+        const blocks = section.querySelectorAll('h1, h2, h3, p, li, span');
+
+        blocks.forEach((node) => {
+          const text = node.textContent.replace(/\s+/g, ' ').trim();
+          if (text.length > 3 && text.toLowerCase().includes(query)) {
+            if (!matches.some((m) => m.pageId === pageId && m.text === text)) {
+              matches.push({ pageId, pageTitle, text });
+            }
+          }
+        });
+      });
+
+      renderSearchResults(matches.slice(0, 10), query);
+    });
+
+    function renderSearchResults(results, query) {
+      searchResultsBox.classList.remove('hidden');
+      if (results.length === 0) {
+        searchResultsBox.innerHTML = `
+          <div class="px-4 py-3 text-xs text-gray-500 text-center">
+            Tidak ditemukan hasil untuk "<strong>${escapeHtml(query)}</strong>"
+          </div>
+        `;
+        return;
+      }
+
+      searchResultsBox.innerHTML = results
+        .map((item) => {
+          const snippet = item.text.length > 115 ? item.text.slice(0, 115) + '...' : item.text;
+          return `
+            <button
+              type="button"
+              onclick="selectSearchResult('${item.pageId}')"
+              class="w-full text-left px-4 py-2.5 hover:bg-[#F3F0E8]/70 transition block"
+            >
+              <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-[#1B5E20] bg-[#1B5E20]/10 px-2 py-0.5 rounded mb-1">
+                ${escapeHtml(item.pageTitle)}
+              </span>
+              <p class="text-xs sm:text-sm text-gray-800 line-clamp-2">${escapeHtml(snippet)}</p>
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function selectSearchResult(pageId) {
+      navigateTo(pageId);
+      searchBarContainer.classList.add('hidden');
+      searchResultsBox.classList.add('hidden');
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ---------------------------------------------------------------------
+    // LIGHTBOX MODAL FOR CERTIFICATES & DOCUMENTATION
+    // ---------------------------------------------------------------------
+    function openLightbox(title, subtitle, imageUrl) {
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxSubtitle').textContent = subtitle;
+      document.getElementById('lightboxImage').src = imageUrl;
+      document.getElementById('lightboxModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // ---------------------------------------------------------------------
+    // TOAST NOTIFICATION & EMAIL COPY HELPER
+    // ---------------------------------------------------------------------
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    function copyEmailToast(e) {
+      const href = document.getElementById('footerEmailLink').getAttribute('href') || '';
+      const email = href.replace('mailto:', '');
+      if (email) {
+        const tempInput = document.createElement('input');
+        tempInput.value = email;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand('copy');
+          showToast('Email disalin: ' + email);
+        } catch (err) {}
+        document.body.removeChild(tempInput);
+      }
+    }
+
+    // ---------------------------------------------------------------------
+    // INITIALIZATION ON LOAD
+    // ---------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (PAGES.includes(hash)) {
+        navigateTo(hash, false);
+      } else {
+        navigateTo('bio-summary', false);
+      }
+    });
+  </script>
+</body>
+</html>
